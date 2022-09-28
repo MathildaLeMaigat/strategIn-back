@@ -91,15 +91,15 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/users", async (req, res) => {
-  //   console.log(req.body);
-  //   const users = await User.findOne({ email: req.body.email }).populate({
-  //     path: "account",
-  //     select: "username",
-  //   });
-  console.log(users);
-  res.status(200).json({ users });
-});
+// app.post("/users", async (req, res) => {
+//     console.log(req.body);
+//     const users = await User.findOne({ email: req.body.email }).populate({
+//       path: "account",
+//       select: "username",
+//     });
+//   console.log(users);
+//   res.status(200).json({ users });
+// });
 
 app.all("*", (req, res) => {
   console.log("Route Not Found");
