@@ -92,7 +92,7 @@ app.post("/login", async (req, res) => {
 app.post("/users", async (req, res) => {
   try {
     // console.log(req.body);
-    const users = await User.findOne();
+    const users = await User.find();
     console.log(users);
     res.status(200).json({ users: users });
   } catch (error) {
