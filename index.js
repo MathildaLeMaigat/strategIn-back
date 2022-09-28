@@ -90,10 +90,14 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/users", async (req, res) => {
-  console.log(req.body);
-  const users = await User.find();
-  console.log(users);
-  res.status(200).json({ users: users });
+  try {
+    console.log(req.body);
+    const users = await User.find().populate("account", "email");
+    console.log(users);
+    res.status(200).json({ users: users });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 app.all("*", (req, res) => {
