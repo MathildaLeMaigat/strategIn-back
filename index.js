@@ -21,10 +21,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-  console.log("OK");
-  res.status(200).json({ message: "route >> /" });
-});
+// app.get("/", (req, res) => {
+//   console.log("OK");
+//   res.status(200).json({ message: "route >> /" });
+// });
 
 app.post("/register", async (req, res) => {
   try {
