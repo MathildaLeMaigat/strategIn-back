@@ -92,7 +92,10 @@ app.post("/login", async (req, res) => {
 app.post("/users", async (req, res) => {
   try {
     console.log(req.body);
-    const users = await User.find().populate("account", "email");
+    const users = await User.find().populate({
+      path: "users",
+      select: "account.username ",
+    });
     console.log(users);
     res.status(200).json({ users: users });
   } catch (error) {
