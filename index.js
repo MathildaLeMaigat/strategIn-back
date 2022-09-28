@@ -21,10 +21,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// app.get("/", (req, res) => {
-//   console.log("OK");
-//   res.status(200).json({ message: "route >> /" });
-// });
+app.get("/", (req, res) => {
+  console.log("OK");
+  res.status(200).json({ message: "route *** /" });
+});
 
 app.post("/register", async (req, res) => {
   try {
@@ -69,10 +69,8 @@ app.post("/login", async (req, res) => {
   try {
     // console.log(req.body);
     const { email, password } = req.body;
-    // Verifier que l'email existe dans DB
     const user = await User.findOne({ email: email });
     if (user) {
-      // Verifier que le PW est le meme
       const newHash = SHA256(password + user.salt).toString(encBase64);
       if (newHash === user.hash) {
         res.json({
@@ -91,15 +89,12 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// app.post("/users", async (req, res) => {
-//     console.log(req.body);
-//     const users = await User.findOne({ email: req.body.email }).populate({
-//       path: "account",
-//       select: "username",
-//     });
-//   console.log(users);
-//   res.status(200).json({ users });
-// });
+app.post("/users", async (req, res) => {
+  console.log(req.body);
+  const users = await User.find();
+  console.log(users);
+  res.status(200).json({ users: users });
+});
 
 app.all("*", (req, res) => {
   console.log("Route Not Found");
@@ -107,5 +102,5 @@ app.all("*", (req, res) => {
 });
 
 app.listen(process.env.PORT || 3001, () => {
-  console.log("server has started 🔥");
+  console.log("Server has started 🔥");
 });
