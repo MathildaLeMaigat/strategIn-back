@@ -5,7 +5,7 @@ const axios = require("axios");
 
 // IMPORT DB
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/strategIn");
+mongoose.connect(process.env.MONGODB_URI);
 
 // IMPORT package Password
 const uid2 = require("uid2");
@@ -106,6 +106,6 @@ app.all("*", (req, res) => {
   res.status(404).json({ message: "Route Not Found" });
 });
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log("server has started 🔥");
 });
