@@ -91,10 +91,10 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/users", isAuthenticated, async (req, res) => {
+app.post("/users", async (req, res) => {
   try {
-    // console.log(req.body);
-    const users = await User.find().populate("account", "email");
+    console.log(req.body);
+    const users = await User.find();
     console.log(users);
     res.status(200).json({ users: users });
   } catch (error) {
