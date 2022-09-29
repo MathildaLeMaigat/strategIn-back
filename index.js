@@ -81,10 +81,10 @@ app.post("/login", async (req, res) => {
           account: user.account,
         });
       } else {
-        res.status(401).json({ error: "Unauthorized1" });
+        res.status(401).json({ error: "Unauthorized" });
       }
     } else {
-      res.status(401).json({ error: "Unauthorized2" });
+      res.status(401).json({ error: "Unauthorized" });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -95,8 +95,8 @@ app.post("/users", async (req, res) => {
   try {
     console.log(req.body);
     const users = await User.find();
-    console.log(users);
-    res.status(200).json({ users: users });
+    console.log("userback", users);
+    res.status(200).json({ account: users.account });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
