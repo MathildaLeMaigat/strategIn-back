@@ -12,6 +12,8 @@ const uid2 = require("uid2");
 const SHA256 = require("crypto-js/sha256");
 const encBase64 = require("crypto-js/enc-base64");
 
+const isAuthenticated = require("./isAuthenticated");
+
 // IMPORT Model
 const User = require("./Model/User");
 
@@ -89,10 +91,10 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/users", async (req, res) => {
+app.post("/users", isAuthenticated, async (req, res) => {
   try {
     // console.log(req.body);
-    const users = await User.find();
+    const users = await User.find().populate("account", "email");
     console.log(users);
     res.status(200).json({ users: users });
   } catch (error) {
