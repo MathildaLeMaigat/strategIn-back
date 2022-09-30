@@ -87,22 +87,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// app.post("/users", async (req, res) => {
-//   try {
-//     console.log(req.body);
-//     const users = await User.find();
-//     console.log("userback", users);
-//     const response = [];
-//     users.map((users) => {
-//       const usersMap = { username: users.username, email: users.email };
-//       response.push(usersMap);
-//     });
-//     res.status(200).json({ account: users.account });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// });
-
 app.post("/users", async (req, res) => {
   try {
     // console.log(req.body);
