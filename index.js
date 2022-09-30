@@ -92,7 +92,7 @@ app.post("/users", async (req, res) => {
     console.log(req.body);
     const users = await User.find();
     console.log("userback", users);
-    res.status(200).json({ account: users.account });
+    res.status(200).json({ users: users });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
