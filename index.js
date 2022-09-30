@@ -12,12 +12,8 @@ const uid2 = require("uid2");
 const SHA256 = require("crypto-js/sha256");
 const encBase64 = require("crypto-js/enc-base64");
 
-const isAuthenticated = require("./isAuthenticated");
-
 // IMPORT Model
 const User = require("./Model/User");
-
-const { application } = require("express");
 
 const app = express();
 app.use(express.json());
