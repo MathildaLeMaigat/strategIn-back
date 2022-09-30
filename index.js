@@ -87,12 +87,34 @@ app.post("/login", async (req, res) => {
   }
 });
 
+// app.post("/users", async (req, res) => {
+//   try {
+//     console.log(req.body);
+//     const users = await User.find();
+//     console.log("userback", users);
+//     const response = [];
+//     users.map((users) => {
+//       const usersMap = { username: users.username, email: users.email };
+//       response.push(usersMap);
+//     });
+//     res.status(200).json({ account: users.account });
+//   } catch (error) {
+//     res.status(400).json({ error: error.message });
+//   }
+// });
+
 app.post("/users", async (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const users = await User.find();
-    console.log("userback", users);
-    res.status(200).json({ users: users });
+    // console.log("userback", users);
+    const response = [];
+    users.map((user) => {
+      const userMap = { email: user.email, username: user.account.username };
+      response.push(userMap);
+    });
+    // console.log(response);
+    res.status(200).json(response);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
