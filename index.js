@@ -104,11 +104,42 @@ app.post("/users", async (req, res) => {
   }
 });
 
+app.put("/update", async (req, res) => {
+  console.log(req.body);
+  console.log("route >>> update");
+  try {
+    const { username, email, id } = req.body;
+    if (email && username) {
+      const user = await User.findOne({ _id: id });
+      user.username = username;
+      await user.save();
+      res.json({ message: "username successfully updated" });
+    } else {
+      res.status(400).json({ message: "missing something" });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+app.delete("/delete", async (req, res) => {
+  try {
+    if (req.body.id) {
+      await User.findByIdAndDelete(req.body.id);
+      res.json({ message: "User removed" });
+    } else {
+      res.status(400).json({ message: "Missing id" });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 app.all("*", (req, res) => {
   console.log("Route Not Found");
   res.status(404).json({ message: "Route Not Found" });
 });
 
-app.listen(process.env.PORT || 3001, () => {
+app.listen(process.env.PORT, () => {
   console.log("Server has started 🔥");
 });
