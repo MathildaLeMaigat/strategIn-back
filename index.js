@@ -14,6 +14,7 @@ const encBase64 = require("crypto-js/enc-base64");
 
 // IMPORT Model
 const User = require("./Model/User");
+const Task = require("./Model/Task");
 
 const app = express();
 app.use(express.json());
@@ -104,32 +105,48 @@ app.post("/users", async (req, res) => {
   }
 });
 
-app.put("/update", async (req, res) => {
-  console.log(req.body);
-  console.log("route >>> update");
+// Second Part //
+
+// app.get("/create", async (req, res) => {
+//   try {
+//     const newProject = new Project(req.body);
+//     await newProject.save();
+//   } catch (error) {
+//     res.status(400).json({ error: error.message });
+//   }
+// });
+
+app.post("/", async (req, res) => {
   try {
-    const { username, email, id } = req.body;
-    if (email && username) {
-      const user = await User.findOne({ _id: id });
-      user.username = username;
-      await user.save();
-      res.json({ message: "username successfully updated" });
-    } else {
-      res.status(400).json({ message: "missing something" });
-    }
+    const task = await new Task(req.body).save();
+    res.send(task);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
-app.delete("/delete", async (req, res) => {
+app.get("/", async (req, res) => {
   try {
-    if (req.body.id) {
-      await User.findByIdAndDelete(req.body.id);
-      res.json({ message: "User removed" });
-    } else {
-      res.status(400).json({ message: "Missing id" });
-    }
+    const tasks = await Task.find();
+    res.send(tasks);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+app.put("/:id", async (req, res) => {
+  try {
+    const task = await Task.findOneAndUpdate({ _id: req.params.id }, req.body);
+    res.send(task);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+app.delete("/:id", async (req, res) => {
+  try {
+    const task = await Task.findByIdAndDelete(req.params.id);
+    res.send(task);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -140,6 +157,6 @@ app.all("*", (req, res) => {
   res.status(404).json({ message: "Route Not Found" });
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log("Server has started 🔥");
 });
